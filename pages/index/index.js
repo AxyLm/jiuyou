@@ -15,7 +15,12 @@ Page({
         scrollStatus:"loading",
         endText:"没有更多了"
     },
-
+    onReady:function(){
+        wx.showShareMenu({
+            withShareTicket: true,
+            menus: ['shareAppMessage', 'shareTimeline']
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
