@@ -1,0 +1,16 @@
+{
+    "pages": [
+        "pages/index/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "旧游记",
+        "navigationBarTextStyle": "black"
+    },
+    "useExtendedLib": {
+        "weui": true
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+}

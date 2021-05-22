@@ -1,0 +1,39 @@
+<!--pages/index.wxml-->
+<view class="body">
+    <scroll-view scroll-y="true" style="height: 100%;" refresher-enabled="true" bindrefresherrefresh="pageRefresh"
+        refresher-default-style="white" refresher-triggered="{{triggered}}" refresher-background="#bfbfbf"
+        bindscrolltoupper="scrollTop" bindscrolltolower="scrolltolower">
+        <block wx:if="{{topBanner}}">
+            <view class="top_banner">
+                <image src="{{topBanner+'?imageMogr2/auto-orient/thumbnail/1920x1080>/interlace/1/q/70'}}" class="img"
+                    mode="widthFix"></image>
+            </view>
+        </block>
+        <view class="lives" wx:key="_id" wx:for="{{lives}}">
+            <mp-cell hover>
+                <view class="lives-content">
+                    <text class="lives-content-text" wx:if="{{item.content.length>0}}">{{item.content}}</text>
+                </view>
+                <view class="lives-footage" wx:if="{{item.footageList && item.footageList.length > 0}}">
+                    <view wx:for="{{item.footageList}}" wx:for-item="footage" class="footage-item" wx:key="_id"
+                        wx:for-index="footageI">
+                        <image
+                            src="{{footage.url+'?imageMogr2/auto-orient/thumbnail/500x500>/interlace/1/blur/3x0/quality/20'}}"
+                            class="lives-image lives-footage" wx:if="{{footage.showType == 'image'}}"
+                            bindtap="imageShow" data-list="{{item.footageList}}" data-index="{{footageI}}"
+                            mode="aspectFill" lazy-load="true" />
+                        <video src="{{footage.url}}" class="lives-video lives-footage"
+                            wx:if="{{footage.showType == 'video'}}"></video>
+                    </view>
+                </view>
+                <view class="lives-time">
+                    <text class="lives-time-text">{{item.createTimes}}</text>
+                </view>
+            </mp-cell>
+        </view>
+        <mp-loading type="circle" wx:if="{{lives.length > 0}}" show="{{scrollStatus == 'loading'}}"></mp-loading>
+        <view class="end-text">
+            <text wx:if="{{lives.length > 0 && scrollStatus !== 'loading'}}">{{endText}}</text>
+        </view>
+    </scroll-view>
+</view>
