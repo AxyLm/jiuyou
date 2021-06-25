@@ -1,0 +1,7 @@
+<!-- pages/live/live.wxml -->
+<van-cell-group>
+    <van-field value="{{ content }}" type="textarea" rows="4" autosize="{{ autoSizeConfig }}" placeholder="此刻的想法..." type="textarea" clickable ></van-field>
+</van-cell-group>
+<van-cell-group>
+    <van-uploader accept="media" multiple file-list="{{ fileList }}" bind:after-read="afterRead" />
+</van-cell-group>
