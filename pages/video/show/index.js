@@ -1,5 +1,5 @@
 // pages/videoPlay/index.js
-import { fetch, formaTime } from "../tool"
+import { fetch, formaTime } from "../../tool"
 
 Page({
 

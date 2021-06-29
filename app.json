@@ -2,7 +2,7 @@
     "pages": [
         "pages/live/live",
         "pages/index/index",
-        "pages/videoPlay/index"
+        "pages/video/show/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
