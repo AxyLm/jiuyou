@@ -1,16 +1,17 @@
 {
-  "pages": [
-    "pages/live/live",
-    "pages/index/index"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "旧游记",
-    "navigationBarTextStyle": "black"
-  },
-  "useExtendedLib": {
-    "weui": true
-  },
-  "sitemapLocation": "sitemap.json"
+    "pages": [
+        "pages/live/live",
+        "pages/index/index",
+        "pages/videoPlay/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "旧游记",
+        "navigationBarTextStyle": "black"
+    },
+    "useExtendedLib": {
+        "weui": true
+    },
+    "sitemapLocation": "sitemap.json"
 }

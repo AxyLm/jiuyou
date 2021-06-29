@@ -1,0 +1,6 @@
+/* pages/videoPlay/index.wxss */
+.video{
+    margin-left: 5rpx;
+    margin-right: 5rpx;
+    width: 740rpx;
+}

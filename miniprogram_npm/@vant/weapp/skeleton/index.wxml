@@ -20,7 +20,7 @@
       wx:key="index"
       wx:for-index="index"
       class="row-class {{ utils.bem('skeleton__row') }}"
-      style="{{ 'width:' + (isArray ? rowWidth[index] : rowWidth) }}"
+      style="{{ 'width:' + (isArray ? rowWidth[index] : rowWidth) + ((rowHeight != 0)?(';height:'+rowHeight+'px') :' ') }}"
     />
   </view>
 </view>

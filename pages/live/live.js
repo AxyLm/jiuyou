@@ -36,7 +36,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const footagePath = encodeURI("//video/0628.mp4")
+    wx.navigateTo({
+      // url: '/pages/videoPlay/index?footageId=cbddf0af60a4e5ac09a23774641fb28b',
+      url: '/pages/videoPlay/index?footagePath='+footagePath,
+    })
   },
 
   /**

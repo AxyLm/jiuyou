@@ -40,6 +40,11 @@ component_1.VantComponent({
         this.setData({ isArray: val instanceof Array });
       },
     },
+    rowHeight: {
+      type: Number,
+      value: 0,
+    },
+
   },
   data: {
     isArray: false,
