@@ -12,6 +12,7 @@ Page({
         loadStatus: "loading",
         showShare: false,
         loadType: null,
+        baseUrl: "https://qn.soulfree.cn",
         options: [
         [
             { name: '微信', icon: 'wechat' },
@@ -33,19 +34,20 @@ Page({
         console.log(option);
         if (option.footageId) {
             fetch({
-                name: "getFootage",
+                name: "getVideoShare",
                 data: { id: option.footageId },
             }).then(res => {
                 console.log(res);
-                if (res.code == 200 && res.data.showType === "video") {
+                if (res.code == 200 ) {
                     this.setData({
-                        mediaUrl: res.data.url,
+                        mediaUrl: res.data.path,
                         mediaInfo: res.data,
-                        loadType: res.data.showType
                     })
                     this.update("success")
-                    this.videoContext = wx.createVideoContext('myVideo')
-                    this.videoContext.requestFullScreen()
+                    // this.videoContext = wx.createVideoContext('myVideo')
+                    // setTimeout(() => {
+                    //     this.videoContext.requestFullScreen()
+                    // }, 300);
                 } else {
                     this.update("empty")
                 }
@@ -92,6 +94,9 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
+        wx.setBackgroundColor({
+            backgroundColor: '#010001',
+        })
         wx.showShareMenu({
             withShareTicket: true,
             menus: ['shareAppMessage', 'shareTimeline']

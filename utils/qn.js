@@ -17,10 +17,10 @@ async function getQnToken() {
             })
         })
     } else {
-        return resolve(token)
+        return Promise.resolve(token)
     }
 }
 
 module.exports = {
-    getQnToken: await getQnToken,
+    getQnToken,
 }

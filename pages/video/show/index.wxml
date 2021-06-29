@@ -1,6 +1,6 @@
 <!--pages/videoPlay/index.wxml-->
 <van-skeleton row="1" rowHeight="{{200}}" loading="{{ loadStatus=='loading' }}">
-    <video wx:if="{{loadType === 'video'}}" id="myVideo" src="{{mediaUrl?mediaUrl:''}}" class="video" danmu-btn enable-danmu enable-play-gesture autoplay enable-auto-rotation binderror="videoErr"></video>
+    <video id="myVideo" src="{{mediaUrl?baseUrl+mediaUrl:''}}" class="video" enable-play-gesture  enable-auto-rotation binderror="videoErr"></video>
     <image wx:if="{{loadType === 'image'}}" src="{{ mediaUrl }}" mode="aspectFill" lazy-load="true" />
 </van-skeleton>
 
