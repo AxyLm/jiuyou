@@ -1,4 +1,4 @@
-<!--pages/videoPlay/index.wxml-->
+<!--pages/video/show/index.wxml-->
 <van-skeleton row="1" rowHeight="{{200}}" loading="{{ loadStatus=='loading' }}">
     <video id="myVideo" src="{{mediaUrl?baseUrl+mediaUrl:''}}" class="video" enable-play-gesture  enable-auto-rotation binderror="videoErr"></video>
     <image wx:if="{{loadType === 'image'}}" src="{{ mediaUrl }}" mode="aspectFill" lazy-load="true" />

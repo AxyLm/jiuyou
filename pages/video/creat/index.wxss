@@ -1,0 +1,11 @@
+/* pages/video/creat/index.wxss */
+.wrap{
+    width: 750rpx;
+    height: 100vh;
+    background-color: #000000;
+}
+.video-box{
+    /* border:1rpx solid red; */
+    width:750rpx;
+    max-height: 90vh;
+}

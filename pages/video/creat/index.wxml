@@ -1,0 +1,11 @@
+<!--pages/video/creat/index.wxml-->
+<!-- <van-cell-group> -->
+    <!-- <van-uploader accept="video" max-count="{{1}}" file-list="{{ fileList }}" bind:after-read="afterRead" /> -->
+<!-- </van-cell-group> -->
+<view class="wrap">
+    <view class="video-box" style="{{'height:'+showVideoHeight+'rpx'}}">
+        <van-button type="primary" bind:tap="chooseVideo">选择视频</van-button>
+        <van-button type="primary" bind:tap="uploadVideo">开始上传</van-button>
+        <video wx:if="{{chooseInfo.tempFilePath}}" src="{{chooseInfo.tempFilePath}}" style="width:100%;height:100%"> </video>
+    </view>
+</view>
