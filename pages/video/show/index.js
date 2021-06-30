@@ -8,7 +8,7 @@ Page({
      */
     data: {
         mediaUrl: null,
-        mediaInfo: null,
+        videoInfo: null,
         loadStatus: "loading",
         showShare: false,
         loadType: null,
@@ -32,16 +32,15 @@ Page({
      */
     onLoad: function (option) {
         console.log(option);
-        if (option.footageId) {
+        if (option.id) {
             fetch({
-                name: "getVideoShare",
-                data: { id: option.footageId },
+                name: "videoShare",
+                data: { action:"getVideo", id: option.id },
             }).then(res => {
                 console.log(res);
                 if (res.code == 200 ) {
                     this.setData({
-                        mediaUrl: res.data.path,
-                        mediaInfo: res.data,
+                        videoInfo: res.data,
                     })
                     this.update("success")
                     // this.videoContext = wx.createVideoContext('myVideo')

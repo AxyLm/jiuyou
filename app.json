@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/video/creat/index",
         "pages/live/live",
+        "pages/video/creat/index",
         "pages/index/index",
         "pages/video/show/index"
     ],

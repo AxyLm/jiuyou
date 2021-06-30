@@ -16,7 +16,9 @@ const getVideo = function (param) {
 const insert = function (param) {
     
 }
-
+const insertVideo = function (param) {
+    return collection.add({data:param})
+}
 const requestBack = {
     success: function (data) {
         return {
@@ -47,21 +49,20 @@ const mainFun = {
             return requestBack.fail(res.data)
         }
     },
-    insert: function () {
-        return requestBack.success(null)
+    insert: function (event) {
+        return insertVideo(event.param)
     }
 }
 
 
 
 exports.main = async (event, context) => {
-    console.log(mainFun);
-    console.log(mainFun[event.action]);
-    if (event.action && typeof mainFun[event.action] === "function") {
+    const action = event.action
+    if (action && typeof mainFun[action] === "function") {
         console.log(event);
         var param = event
         delete param.action
-        return mainFun[event.action](param)
+        return mainFun[action](param)
     } else {
         return Promise.reject("param.action is not defined!")
     }

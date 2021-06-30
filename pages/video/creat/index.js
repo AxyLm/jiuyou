@@ -8,11 +8,11 @@ Page({
     data: {
         content: "",
         title: null,
-        fileList: [],
         chooseInfo: {},
         videoInfo: {},
         showVideoHeight: 300,
-        uploadInfo: {}
+        uploadInfo: {},
+        baseUrl: "https://qn.soulfree.cn"
     },
     /**
      * 生命周期函数--监听页面加载
@@ -28,14 +28,57 @@ Page({
 
     },
     uploadVideo() {
-        fetch({
-            name: "videoShare",
-            data: { action:"insert",id: "28ee4e3e60db0fc826410e0461b263ca" },
+        const { tempFilePath,thumbTempFilePath } = this.data.chooseInfo
+
+        wxUpload(tempFilePath).then(res => {
+            console.log(res);
+
+            const { videoInfo, baseUrl } = this.data
+            fetch({
+                name: "videoShare",
+                data: {
+                    action: "insert",
+                    param: {
+                        ...videoInfo,
+                        hash:res.hash,
+                        fileUrl: baseUrl + "/video/wxs_cloud/" +res.key,
+                        thumbImageUrl: null
+                    }
+                },
+            }).then(res => {
+
+                wx.showToast({
+                    title: '成功',
+                    icon: 'success',
+                    duration: 2000
+                  })
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+            })
+
         })
-        const { tempFilePath } = this.data.chooseInfo
-        wxUpload( tempFilePath ).then(data => {
-            this.setData({ uploadInfo: data })
-        })
+
+        // wxUpload( tempFilePath ).then(data => {
+        //     this.setData({ uploadInfo: data })
+
+        //     const { videoInfo, baseUrl } = this.data
+        //     fetch({
+        //         name: "videoShare",
+        //         data: {
+        //             action: "insert",
+        //             param: {
+        //                 ...videoInfo,
+        //                 fileUrl: baseUrl + data.key,
+        //                 thumbImage: baseUrl + 
+        //             }
+        //         },
+        //     }).then(res => {
+        //         console.log(res);
+        //     }).catch(err => {
+        //         console.log(err);
+        //     })
+        // })
     },
     clearInfo() {
         this.setData({
@@ -59,33 +102,23 @@ Page({
                 })
                 wx.getVideoInfo({
                     src: res.tempFilePath,
-                    success(e) {
-                        var { width, height } = e
+                    success(info) {
+                        console.log(info);
+                        var { width, height } = info
                         // if (e.orientation.indexOf("left") > -1 || e.orientation.indexOf("right") > -1) {
                         //     width = e.height
                         //     height = e.width
                         // }
                         that.setData({
-                            videoInfo: e,
+                            videoInfo: info,
                             showVideoHeight: parseFloat((height / (width / 750)).toFixed(2))
                         })
-                        console.log(e);
+                    },
+                    complete(end){
+                        console.log(end)
                     }
                 })
             }
-        })
-    },
-    afterRead(event) {
-        wxUpload(event.detail.file.url).then(data => {
-            console.log(data);
-            // 上传完成需要更新 fileList
-            let fileList = []
-            fileList.push({ ...event.detail.file, qnUrl: "https://qn.soulfree.cn/"+data.key });
-            this.setData({ fileList });
-            console.log(this.data.fileList);
-        }).catch(err => {
-            console.log(err);
-            this.afterRead(event)
         })
     },
     /**

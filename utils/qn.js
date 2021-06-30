@@ -1,4 +1,4 @@
-var token = "tZnU5NJbQsOrBVzODD2kzmTRl-e2nwKKCC2Z415o:Yncqrn7AKxfaKUiS0VIO8pHZ7A8=:eyJzY29wZSI6Im15bGl2aW5nIiwiZGVhZGxpbmUiOjE2MjUwNDc4NjN9";
+var token = wx.getStorageSync('qnToken');
 var baseUrl = "https://lives.soulfree.cn"
 async function getQnToken() {
     if (!token) {
@@ -8,9 +8,11 @@ async function getQnToken() {
                 method: "GET",
                 success(res) {
                     token = res.data.data
+                    wx.setStorageSync('qnToken', token)
                     resolve(token)
                 },
                 fail(err) {
+                    wx.removeStorageSync('qnToken')
                     token = null;
                     reject(err)
                 }

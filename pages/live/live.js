@@ -38,7 +38,7 @@ Page({
   onLoad: function (options) {
     const footagePath = encodeURI("//video/0628.mp4")
     wx.navigateTo({
-      url: '/pages/video/show/index?footageId=28ee4e3e60db0fc826410e0461b263ca',
+      url: '/pages/video/show/index?id=b00064a760dc6fd523e9d18546f2a530',
       // url: '/pages/video/show/index?footagePath='+footagePath,
     })
   },
