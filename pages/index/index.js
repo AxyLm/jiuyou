@@ -176,4 +176,11 @@ Page({
             })
         })
     },
+    onShareAppMessage: function () {
+        return {
+            title: "留存生活的点滴。",
+            path: "/pages/index/index",
+            imageUrl: this.data.topBanner+"?imageView2/1/w/1000/h/800/format/jpg/q/75"
+        };
+    }
 })
