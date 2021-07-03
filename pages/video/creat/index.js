@@ -1,5 +1,5 @@
-import { fetch, wxUpload } from "../../tool"
-
+import { fetch, wxUpload, randomStr } from "../../tool"
+import moment from "moment"
 Page({
 
     /**
@@ -28,57 +28,53 @@ Page({
 
     },
     uploadVideo() {
+        wx.showLoading({
+          title: '上传中...',
+        })
         const { tempFilePath,thumbTempFilePath } = this.data.chooseInfo
-
-        wxUpload(tempFilePath).then(res => {
-            console.log(res);
-
+        wxUpload(tempFilePath,"video/").then(res => {
             const { videoInfo, baseUrl } = this.data
+            delete videoInfo.errMsg
             fetch({
                 name: "videoShare",
                 data: {
                     action: "insert",
                     param: {
                         ...videoInfo,
-                        hash:res.hash,
-                        fileUrl: baseUrl + "/video/wxs_cloud/" +res.key,
+                        ...res,
                         thumbImageUrl: null
                     }
                 },
             }).then(res => {
-
+                wx.hideLoading()
                 wx.showToast({
                     title: '成功',
                     icon: 'success',
                     duration: 2000
-                  })
+                })
+                wx.navigateTo({
+                    url: '/pages/video/show/index?id='+res._id,
+                })
                 console.log(res);
             }).catch(err => {
+                wx.showToast({
+                    title: '网络异常',
+                    icon: 'error',
+                    duration: 2000
+                })
+                wx.hideLoading()
                 console.log(err);
             })
 
         })
-
-        // wxUpload( tempFilePath ).then(data => {
-        //     this.setData({ uploadInfo: data })
-
-        //     const { videoInfo, baseUrl } = this.data
-        //     fetch({
-        //         name: "videoShare",
-        //         data: {
-        //             action: "insert",
-        //             param: {
-        //                 ...videoInfo,
-        //                 fileUrl: baseUrl + data.key,
-        //                 thumbImage: baseUrl + 
-        //             }
-        //         },
-        //     }).then(res => {
-        //         console.log(res);
-        //     }).catch(err => {
-        //         console.log(err);
-        //     })
-        // })
+    },
+    creatRandomStr() {
+        let str = randomStr({
+            randomLength: 6,
+            upper: true
+        })
+        str += "_" + moment().format("YYMMDD_HHmm")
+        return str
     },
     clearInfo() {
         this.setData({

@@ -7,6 +7,6 @@
 
 <view class="wrap">
     <view class="video-box" style="{{'height:'+showVideoHeight+'rpx'}}">
-        <video wx:if="{{videoInfo.fileUrl}}" src="{{videoInfo.fileUrl}}" style="width:100%;height:100%"> </video>
+        <video id="myVideo" wx:if="{{videoInfo.fileUrl}}" src="{{videoInfo.fileUrl}}" style="width:100%;height:100%" enable-play-gesture  enable-auto-rotation> </video>
     </view>
 </view>

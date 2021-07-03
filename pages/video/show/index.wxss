@@ -1,4 +1,16 @@
 /* pages/videoPlay/index.wxss */
+.wrap{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+}
+.video-box{
+    width: 100%; 
+}
 .video{
     margin-left: 5rpx;
     margin-right: 5rpx;

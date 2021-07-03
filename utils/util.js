@@ -36,6 +36,62 @@ function formaTime(timestemp) {
     return "刚刚"
 }
 
+function randomStr(option) {
+    let {randomLength, number, lower, upper} = option
+    if (!randomLength) {
+        randomLength = 8
+    }
+    if (!number && !lower && !upper) {
+        number = true
+    }
+    var upperCaseChars = function () {
+        //生成大写字母  A的Unicode值为65
+        let str = [];
+        for (let i = 65; i < 91; i++) {
+            str.push(String.fromCharCode(i));
+        }
+        return str;
+    }
+    var lowerCaseChars = function () {
+        //生成小写字母  a的Unicode值为97
+        let str = [];
+        for (let i = 97; i < 123; i++) {
+            str.push(String.fromCharCode(i));
+        }
+        return str;
+    }
+    var numberChars = function () {
+        let str = [];
+        for (let i = 0; i < 9; i++) {
+            str.push(i);
+        }
+        return str;
+    }
+
+
+    var chart_list = [
+        numberChars(), lowerCaseChars(), upperCaseChars()
+    ]
+    var check_list = [number,lower,upper]
+    var pass_list = []
+
+    for (let i = 0; i < check_list.length; i++) {
+        const item = check_list[i];
+        if (item) {
+            pass_list = pass_list.concat(chart_list[i])
+        }
+    }
+    var password = ""
+    pass_list.sort(function () { return 0.5 - Math.random() })
+    if (pass_list.length > 0) {
+        for (let i = 0; i < randomLength; i++) {
+            password += pass_list[Math.floor(Math.random() * pass_list.length)]
+        }
+    }
+    return password
+}
+
 module.exports = {
-    formaTime
+    formaTime,
+    randomStr
 }

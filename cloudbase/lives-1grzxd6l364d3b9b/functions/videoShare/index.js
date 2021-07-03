@@ -8,14 +8,21 @@ const $ = db.command.aggregate
 const _ = db.command
 
 const getVideo = function (param) {
-    if (!param.id) {
-        return Promise.reject("docId is undefined")
+    const {_id,fileId} = param
+    if (!_id && !fileId) {
+        return Promise.reject("id is not defined")
     }
-    return collection.doc(param.id).get()
+    return collection.where({
+        _id,fileId
+    }).get().then(res => {
+        if (res.data.length > 0) {
+            return res.data[0]
+        } else {
+            return false
+        }
+    })
 }
-const insert = function (param) {
-    
-}
+
 const insertVideo = function (param) {
     return collection.add({data:param})
 }
@@ -42,11 +49,11 @@ const requestBack = {
 
 const mainFun = {
     getVideo: async function (event) {
-        const res = await getVideo(event);
-        if(res.data && res.data._id){
-            return requestBack.success(res.data)
+        const data = await getVideo(event);
+        if(data){
+            return requestBack.success(data)
         }else{
-            return requestBack.fail(res.data)
+            return requestBack.fail(null)
         }
     },
     insert: function (event) {

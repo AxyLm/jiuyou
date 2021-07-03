@@ -32,29 +32,51 @@ Page({
      */
     onLoad: function (option) {
         console.log(option);
-        if (option.id) {
-            fetch({
-                name: "videoShare",
-                data: { action:"getVideo", id: option.id },
-            }).then(res => {
-                console.log(res);
-                if (res.code == 200 ) {
-                    this.setData({
-                        videoInfo: res.data,
-                    })
-                    this.update("success")
-                    // this.videoContext = wx.createVideoContext('myVideo')
-                    // setTimeout(() => {
-                    //     this.videoContext.requestFullScreen()
-                    // }, 300);
-                } else {
-                    this.update("empty")
+        wx.showLoading({
+            title:"..."
+        })
+        fetch({
+            name: "videoShare",
+            data: { action:"getVideo", ...option },
+        }).then(res => {
+            wx.hideLoading()
+            if (res.code == 200 ) {
+                var { width, height, orientation } = res.data
+                if (orientation.indexOf("left") > -1 || orientation.indexOf("right") > -1) {
+                    width = e.height
+                    height = e.width
                 }
-            }).catch(err => {
+                this.setData({
+                    videoInfo: res.data,
+                    showVideoHeight: parseFloat((height / (width / 750)).toFixed(2))
+                })
+                this.setData({
+                    videoInfo: res.data,
+                })
+                this.update("success")
+                // this.videoContext = wx.createVideoContext('myVideo')
+                // setTimeout(() => {
+                //     this.videoContext.requestFullScreen()
+                //     this.videoContext.play()
+                // }, 300);
+            } else {
+                wx.showToast({
+                    title: '资源不存在',
+                    icon: 'error',
+                    duration: 2000
+                })
                 this.update("empty")
-                console.log(err);
+            }
+        }).catch(err => {
+            wx.hideLoading()
+            wx.showToast({
+                title: '运行异常',
+                icon: 'error',
+                duration: 2000
             })
-        }
+            this.update("empty")
+            console.log(err);
+        })
         // else if (option.footagePath) {
         //     this.setData({
         //         mediaUrl: "https://qn.soulfree.cn" + decodeURI(option.footagePath),
@@ -141,12 +163,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function (option) {
-        console.log(option);
-        const { showType,url } = this.data.mediaInfo
+        const { fileId } = this.data.videoInfo
         return {
-            title: "img",
-            path: "/pages/videoPlay/index",
-            imageUrl: showType === "image"?url:""
+            title: "",
+            path: "/pages/vide/show/index?fileId="+fileId,
+            imageUrl: "https://qn.soulfree.cn/BB14ETwQ.jpg"
         };
     }
 })

@@ -16,6 +16,7 @@ Page({
         endText:"没有更多了"
     },
     onReady:function(){
+        
         wx.showShareMenu({
             withShareTicket: true,
             menus: ['shareAppMessage', 'shareTimeline']
@@ -25,6 +26,19 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        let livesList = wx.getStorageSync('livesList')
+        if(livesList){
+            livesList = JSON.parse(livesList)
+            this.setData({
+                lives:livesList
+            })
+        }
+        let topbanner = wx.getStorageSync("topbanner")
+        if (topbanner) {
+            this.setData({
+                topBanner:topbanner
+            })
+        }
         const _this = this
         wx.showLoading({
             title:"稍等..."
@@ -38,12 +52,7 @@ Page({
             wx.hideLoading()
         })
 
-        const topbanner = wx.getStorageSync("topbanner")
-        if (topbanner) {
-            this.setData({
-                topBanner:topbanner
-            })
-        }
+        
         fetch({
             name: "redis",
             data: { key: "topbanner" },
@@ -154,6 +163,9 @@ Page({
                     this.setData({
                         lives: list
                     })
+                    if(page == 1){
+                        wx.setStorageSync('livesList', JSON.stringify(resolve.data))
+                    }
                     then(resolve)
                 }
             }).catch((err)=>{
